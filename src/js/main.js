@@ -1,5 +1,5 @@
-var App = require('./components/App');
-var React = require('react');
-var ReactDOM = require('react-dom');
+import User from './users/users';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-ReactDOM.render(<App />, document.getElementById('main'));
+ReactDOM.render(<User />, document.getElementById('main'));
