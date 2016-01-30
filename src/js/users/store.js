@@ -19,7 +19,8 @@ class Store extends EventEmitter {
 		      		that.user.email = response2.email;
 		      		that.user.first_name = response2.first_name;
 		      		that.user.last_name = response2.last_name;
-		      		that.user.id = response2.id;
+		      		that.user.authId = response2.id;
+		      		that.user.authProvider = "facebook"
 		      		that.emit('fb-logged-in');
 		      	});
 		    } else if (response.status === 'not_authorized') {
