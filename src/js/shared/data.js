@@ -1,5 +1,4 @@
 /**
- *	Data - simple and lightweight data provider.  Supports backbone models.
  *
  *	TODO: simplify and seperate data concerns into seperate files
  *  TODO: implement React data provider
@@ -11,16 +10,14 @@
  *  options:
  *     useDefaultErrorHandling: {false} - set to true to use toast error handling
  */
-
-var Backbone = window.Backbone;
-
-import Toastr from 'toastr.js';
+import $ from 'jquery';
+import Toastr from './toastr.js';
 
 module.exports = (function data() {
 
   // Common Options
   var genericAjaxSuccessMsg = 'Request was successful',
-      genericAjaxErrorMsg = 'An error happened while fetching data for this page. If the error persists, please contact support at crimsonsupport@advisory.com';
+      genericAjaxErrorMsg = 'An error happened while fetching data for this page. If the error persists, please contact support.';
 
   // Get Success Message
   function getSuccessMessage(results){
@@ -112,36 +109,12 @@ module.exports = (function data() {
     return _executeRequest('DELETE', url, model, options);
   }
 
-  // End Core CRUD Api
-
-  // Begin Backbone Wrapper
-  Backbone.ajax = function() {
-    // Invoke $.ajaxSetup in the context of Backbone.$
-    Backbone.$.ajaxSetup.call(Backbone.$, {
-      statusCode: {
-        401: function() {
-          console.log('global 401');
-        },
-        403: function() {
-          console.log('global 403');
-        },
-        500: function() {
-          console.log('global 500');
-        }
-      }
-    });
-    return Backbone.$.ajax.apply(Backbone.$, arguments);
-  };
-
-  // End Backbone Wrapper
-
   return {
     get:get,
     create:create,
     post:create,
     update:update,
-    remove:remove,
-    Backbone:Backbone
+    remove:remove
   };
 
 }());

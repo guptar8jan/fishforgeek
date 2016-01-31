@@ -9,7 +9,7 @@ module.exports = {
     patchUser: patchUser
 };
 
-function getUsers(req, res){
+function getUsers(req, res, next){
 	console.log(db2.users.attributes);
 	if(req.params.id) {
 		db2.users
@@ -21,13 +21,18 @@ function getUsers(req, res){
 				res.status(500).send(error);
 			});
 	} else {
+		var where = {where: {}};
+		if(req.query.authId && req.query.authProvider)
+		{
+			where = {where: req.query};
+		}
 		db2.users
-			.findAll()
+			.findAll(where)
 			.then(function (allUsers) {
 				res.status(200).send(allUsers);
 			})
 			.catch(function(error){
-				res.status(500).send(error);
+				next(error);
 			});
 	} 
 }
@@ -93,10 +98,10 @@ function patchUser(req, res){
 function createUser(req, res){
 	var user = req.body;
 	user = _.omit(user, ['id', 'createdAt', 'updatedAt']);
-	db2.users.create(user)
+	return db2.users.create(user)
 	.then(function(created) {
 	    res.status(201).send(created);
-	  })
+	})
 	.catch(db2.Sequelize.ValidationError, function(validationErrors){
 		res.status(400).send(validationErrors.errors);
 	})

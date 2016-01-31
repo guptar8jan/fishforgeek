@@ -1,4 +1,6 @@
+import $ from 'jquery';
 import Toastr from 'toastr';
+
 Toastr.options = {
   'closeButton': true,
   'debug': false,
