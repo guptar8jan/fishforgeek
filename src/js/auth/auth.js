@@ -6,15 +6,21 @@ import Toastr from '../shared/toastr.js';
 import Router from 'react-router';
 import { Route, RouteHandler, DefaultRoute, State, Link, Redirect } from 'react-router';
 
-export default class AuthComponent extends React.Component {
-  
+class AuthComponent extends React.Component {
+
+  static contextTypes = {
+    router: function contextType() {
+      return React.PropTypes.func.isRequired;
+    }
+  };
+
   constructor(props, context){
     super(props, context);
-    
+
     this.state = {
       user: store.user
     };
-    
+
     store.on('fb-logged-in', function(){
       Toastr.success("Thanks for logging in " + this.state.user.firstName);
       this.forceUpdate();
@@ -53,8 +59,4 @@ export default class AuthComponent extends React.Component {
   }
 }
 
-AuthComponent.contextTypes = {
-  router: function contextType() {
-    return React.PropTypes.func.isRequired;
-  }
-};
+export default AuthComponent
