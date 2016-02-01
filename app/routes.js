@@ -1,6 +1,6 @@
-var express = require('express');
+import express from 'express'
 
-var app = express();
+export var app = express();
 module.exports = app;
 
 app.use('/users', require('./users/routes.js'));

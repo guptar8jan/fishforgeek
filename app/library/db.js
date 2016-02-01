@@ -1,9 +1,10 @@
-var Sequelize = require("sequelize");
-var fs = require('fs');
-var path = require('path');
+import Sequelize from 'sequelize';
+import fs from 'fs';
+import path from 'path';
+import config from '../config';
 
-var sequelize = new Sequelize('fishforgeek', 'postgres', 'postgres', {
-  host: 'xede-unittest-psql-host',
+var sequelize = new Sequelize(config.db.name, config.db.userName, config.db.password, {
+  host: config.db.host,
   dialect: 'postgres',
 
   pool: {
@@ -33,4 +34,4 @@ Object.keys(db2).forEach(function (modelName) {
 module.exports = Sequelize.Utils._.extend({
     sequelize: sequelize,
     Sequelize: Sequelize
-}, db2) 
+}, db2)

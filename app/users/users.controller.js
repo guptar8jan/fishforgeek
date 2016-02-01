@@ -2,14 +2,7 @@
 import db2 from '../library/db';
 import _ from "lodash";
 
-module.exports = {
-    getUsers: getUsers,
-    createUser: createUser,
-    updateUser: updateUser,
-    patchUser: patchUser
-};
-
-function getUsers(req, res, next){
+export function getUsers(req, res, next){
 	console.log(db2.users.attributes);
 	if(req.params.id) {
 		db2.users
@@ -34,17 +27,17 @@ function getUsers(req, res, next){
 			.catch(function(error){
 				next(error);
 			});
-	} 
+	}
 }
 
-function updateUser(req, res){
+export function updateUser(req, res){
 	var user = req.body;
 	user = _.omit(user, ['id', 'createdAt', 'updatedAt']);
 	if(!validateUser(res, user)){
 		return;
 	}
 	var id = req.params.id;
-	
+
 	db2.users.update(user,
 		  {
 		    where: { id : id }
@@ -67,7 +60,7 @@ function updateUser(req, res){
 	});
 }
 
-function patchUser(req, res){
+export function patchUser(req, res){
 	var id = req.params.id;
 	var user = req.body;
 	user = _.omit(user, ['id', 'createdAt', 'updatedAt']);
@@ -95,7 +88,7 @@ function patchUser(req, res){
 	});
 }
 
-function createUser(req, res){
+export function createUser(req, res){
 	var user = req.body;
 	user = _.omit(user, ['id', 'createdAt', 'updatedAt']);
 	return db2.users.create(user)
