@@ -1,0 +1,4 @@
+{
+  "verbose": true,
+  "ignoreRoot": [".git", "node_modules", "src/js", "src"]
+}
